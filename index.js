@@ -7,6 +7,7 @@ import session from "express-session";
 import "dotenv/config";
 import ModuleRoutes from "./Kanbas/Modules/routes.js";
 import courses from "./Kanbas/Database/courses.js";
+import QuizRoutes from "./Kanbas/Quizzes/routes.js";
 
 import users from "./Kanbas/Database/users.js";
 import CourseRoutes from "./Kanbas/Courses/routes.js";
@@ -37,6 +38,6 @@ Hello(app);
 CourseRoutes(app);
 Lab5(app);
 UserRoutes(app);
-CourseRoutes(app);
 ModuleRoutes(app);
+QuizRoutes(app);
 app.listen(process.env.PORT || 4000);

@@ -8,9 +8,11 @@ import "dotenv/config";
 import ModuleRoutes from "./Kanbas/Modules/routes.js";
 import courses from "./Kanbas/Database/courses.js";
 import QuizRoutes from "./Kanbas/Quizzes/routes.js";
+import AssignmentRoutes from "./Kanbas/Assignments/routes.js";
 
 import users from "./Kanbas/Database/users.js";
 import CourseRoutes from "./Kanbas/Courses/routes.js";
+import EnrollmentRoutes from "./Kanbas/Enrollments/routes.js";
 const app = express();
 app.use(
   cors({
@@ -40,4 +42,6 @@ Lab5(app);
 UserRoutes(app);
 ModuleRoutes(app);
 QuizRoutes(app);
+AssignmentRoutes(app);
+EnrollmentRoutes(app);
 app.listen(process.env.PORT || 4000);

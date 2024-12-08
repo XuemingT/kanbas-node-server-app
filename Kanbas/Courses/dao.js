@@ -1,43 +1,39 @@
 import Database from "../Database/index.js";
 
-export const findAllAssignments = () => {
-  const { assignments } = Database;
-  return assignments;
+export const findAllCourses = () => {
+  const { courses } = Database;
+  return courses;
 };
-
-export const findAssignmentsForCourse = (courseId) => {
-  const { assignments } = Database;
-  return assignments.filter((assignment) => assignment.course === courseId);
-};
-
-export const findAssignmentById = (assignmentId) => {
-  const { assignments } = Database;
-  return assignments.find((assignment) => assignment._id === assignmentId);
-};
-
-export const createAssignment = (assignment) => {
-  const newAssignment = { ...assignment, _id: new Date().getTime().toString() };
-  Database.assignments.push(newAssignment);
-  return newAssignment;
-};
-
-export const updateAssignment = (aid, assignmentUpdates) => {
-  const assignmentIndex = Database.assignments.findIndex(
-    (assignment) => assignment._id === aid
-  );
-  Database.assignments[assignmentIndex] = {
-    ...Database.assignments[assignmentIndex],
-    ...assignmentUpdates,
+export const createCourse = (course) => {
+  const newCourse = {
+    ...course,
+    _id: new Date().getTime().toString(),
+    startDate: course.startDate || "2023-01-10",
+    endDate: course.endDate || "2023-05-15",
+    credits: course.credits || 3,
   };
-  return Database.assignments[assignmentIndex];
+  Database.courses.push(newCourse);
+  return newCourse;
+};
+export const deleteCourse = (courseId) => {
+  const courseCount = Database.courses.length;
+  Database.courses = Database.courses.filter(
+    (course) => course._id !== courseId
+  );
+  return { status: courseCount > Database.courses.length ? "OK" : "NOT FOUND" };
+};
+export const updateCourse = (courseId, courseUpdates) => {
+  const courseIndex = Database.courses.findIndex(
+    (course) => course._id === courseId
+  );
+  if (courseIndex === -1) return null;
+  Database.courses[courseIndex] = {
+    ...Database.courses[courseIndex],
+    ...courseUpdates,
+  };
+  return Database.courses[courseIndex];
 };
 
-export const deleteAssignment = (aid) => {
-  Database.assignments = Database.assignments.filter(
-    (assignment) => assignment._id !== aid
-  );
-  return { status: "OK" };
-};
 export function findCoursesForEnrolledUser(userId) {
   const { courses, enrollments } = Database;
   const enrolledCourses = courses.filter((course) =>

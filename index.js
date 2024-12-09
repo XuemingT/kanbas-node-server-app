@@ -33,15 +33,13 @@ const sessionOptions = {
   secret: process.env.SESSION_SECRET || "kanbas",
   resave: false,
   saveUninitialized: false,
-};
-if (process.env.NODE_ENV !== "development") {
-  sessionOptions.proxy = true;
-  sessionOptions.cookie = {
+  cookie: {
     sameSite: "none",
     secure: true,
-    domain: process.env.NODE_SERVER_DOMAIN,
-  };
-}
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+  },
+  proxy: true,
+};
 app.use(session(sessionOptions));
 
 app.use(express.json());

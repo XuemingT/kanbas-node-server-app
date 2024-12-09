@@ -23,7 +23,7 @@ app.use(
     credentials: true,
     origin: [
       "http://localhost:3000" ||
-        "https://a5--kanbas-react-web-app-cs5610-fa24-xm.netlify.app",
+        "https://kanbas-react-web-app-cs5610-a6.netlify.app",
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],

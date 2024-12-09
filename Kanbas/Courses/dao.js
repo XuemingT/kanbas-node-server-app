@@ -4,17 +4,12 @@ export const findAllCourses = () => {
   const { courses } = Database;
   return courses;
 };
-export const createCourse = (course) => {
-  const newCourse = {
-    ...course,
-    _id: new Date().getTime().toString(),
-    startDate: course.startDate || "2023-01-10",
-    endDate: course.endDate || "2023-05-15",
-    credits: course.credits || 3,
-  };
-  Database.courses.push(newCourse);
+export function createCourse(course) {
+  const newCourse = { ...course, _id: Date.now().toString() };
+  Database.courses = [...Database.courses, newCourse];
   return newCourse;
-};
+}
+
 export const deleteCourse = (courseId) => {
   const courseCount = Database.courses.length;
   Database.courses = Database.courses.filter(

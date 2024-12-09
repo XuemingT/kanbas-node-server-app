@@ -18,22 +18,26 @@ app.use(
   cors({
     credentials: true,
     origin: [
-      "http://localhost:3000",
-      "https://a5--kanbas-react-web-app-cs5610-fa24-xm.netlify.app",
+      "http://localhost:3000" ||
+        "https://a5--kanbas-react-web-app-cs5610-fa24-xm.netlify.app",
     ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 const sessionOptions = {
   secret: process.env.SESSION_SECRET || "kanbas",
   resave: false,
   saveUninitialized: false,
-  cookie: {
+};
+if (process.env.NODE_ENV !== "development") {
+  sessionOptions.proxy = true;
+  sessionOptions.cookie = {
     sameSite: "none",
     secure: true,
-    maxAge: 24 * 60 * 60 * 1000, // 24 hours
-  },
-  proxy: true,
-};
+    domain: process.env.NODE_SERVER_DOMAIN,
+  };
+}
 app.use(session(sessionOptions));
 
 app.use(express.json());

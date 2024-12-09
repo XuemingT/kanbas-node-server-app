@@ -114,7 +114,7 @@ export default [
     shuffleAnswers: false,
     timeLimit: 0,
     multipleAttempts: false,
-    attempts: 1,
+    attempts: 2,
     showCorrectAnswers: "Never",
     accessCode: "",
     oneQuestionAtATime: false,

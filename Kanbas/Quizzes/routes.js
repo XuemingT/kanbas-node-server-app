@@ -122,4 +122,39 @@ export default function QuizRoutes(app) {
       res.status(500).json({ error: "Error updating quiz status" });
     }
   });
+  // Add these routes
+  app.post("/api/quizzes/:qid/attempts", (req, res) => {
+    try {
+      const attempt = quizDao.createQuizAttempt({
+        ...req.body,
+        quizId: req.params.qid,
+      });
+      res.json(attempt);
+    } catch (error) {
+      res.status(500).json({ error: "Error creating attempt" });
+    }
+  });
+
+  app.get("/api/quizzes/:qid/attempts/:userId", (req, res) => {
+    try {
+      const { qid, userId } = req.params;
+      const attempts = quizDao.findQuizAttemptsByUser(qid, userId);
+      res.json(attempts);
+    } catch (error) {
+      res.status(500).json({ error: "Error fetching attempts" });
+    }
+  });
+
+  app.put("/api/quizzes/attempts/:attemptId", (req, res) => {
+    try {
+      const { attemptId } = req.params;
+      const updated = quizDao.updateQuizAttempt(attemptId, {
+        ...req.body,
+        endTime: new Date().toISOString(),
+      });
+      res.json(updated);
+    } catch (error) {
+      res.status(500).json({ error: "Error updating attempt" });
+    }
+  });
 }

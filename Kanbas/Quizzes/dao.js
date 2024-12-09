@@ -102,3 +102,43 @@ export const updateQuizStatus = (qid, status) => {
   }
   return null;
 };
+
+// Add these quizattempt
+export const createQuizAttempt = (attemptData) => {
+  const newAttempt = {
+    ...attemptData,
+    _id: new Date().getTime().toString(),
+    startTime: new Date().toISOString(),
+  };
+  Database.quizAttempts.push(newAttempt);
+  return newAttempt;
+};
+
+export const findQuizAttemptsByUser = (quizId, userId) => {
+  return Database.quizAttempts.filter(
+    (attempt) => attempt.quizId === quizId && attempt.userId === userId
+  );
+};
+
+export const updateQuizAttempt = (attemptId, updates) => {
+  const index = Database.quizAttempts.findIndex(
+    (attempt) => attempt._id === attemptId
+  );
+  if (index !== -1) {
+    Database.quizAttempts[index] = {
+      ...Database.quizAttempts[index],
+      ...updates,
+    };
+    return Database.quizAttempts[index];
+  }
+  return null;
+};
+
+export const getLatestAttempt = (quizId, userId) => {
+  const attempts = findQuizAttemptsByUser(quizId, userId);
+  return attempts.length > 0
+    ? attempts.sort(
+        (a, b) => new Date(b.endTime).getTime() - new Date(a.endTime).getTime()
+      )[0]
+    : null;
+};

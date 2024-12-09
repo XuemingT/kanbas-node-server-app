@@ -64,13 +64,9 @@ export default function QuizRoutes(app) {
 
   // Delete quiz
   app.delete("/api/quizzes/:qid", (req, res) => {
-    try {
-      const { qid } = req.params;
-      const status = quizDao.deleteQuiz(qid);
-      res.json(status);
-    } catch (error) {
-      res.status(500).json({ error: "Error deleting quiz" });
-    }
+    const { qid } = req.params;
+    const status = quizDao.deleteQuiz(qid);
+    res.json(status);
   });
 
   // Add question to quiz

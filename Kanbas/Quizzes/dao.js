@@ -47,7 +47,7 @@ export const deleteQuiz = (qid) => {
   const index = Database.quizzes.findIndex((quiz) => quiz._id === qid);
   if (index !== -1) {
     Database.quizzes.splice(index, 1);
-    return { status: "ok" };
+    return { status: "ok", deletedQuizId: qid };
   }
   return { status: "error", message: "Quiz not found" };
 };

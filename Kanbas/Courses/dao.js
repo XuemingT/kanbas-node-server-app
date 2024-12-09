@@ -1,34 +1,12 @@
-import Database from "../Database/index.js";
+import CourseModel from "./model.js";
 
-export const findAllCourses = () => {
-  const { courses } = Database;
-  return courses;
-};
-export function createCourse(course) {
-  const newCourse = { ...course, _id: Date.now().toString() };
-  Database.courses = [...Database.courses, newCourse];
-  return newCourse;
+export function deleteCourse(courseId) {
+  return CourseModel.deleteOne({ _id: courseId });
 }
 
-export const deleteCourse = (courseId) => {
-  const courseCount = Database.courses.length;
-  Database.courses = Database.courses.filter(
-    (course) => course._id !== courseId
-  );
-  return { status: courseCount > Database.courses.length ? "OK" : "NOT FOUND" };
-};
-export const updateCourse = (courseId, courseUpdates) => {
-  const courseIndex = Database.courses.findIndex(
-    (course) => course._id === courseId
-  );
-  if (courseIndex === -1) return null;
-  Database.courses[courseIndex] = {
-    ...Database.courses[courseIndex],
-    ...courseUpdates,
-  };
-  return Database.courses[courseIndex];
-};
-
+export function findAllCourses() {
+  return CourseModel.find();
+}
 export function findCoursesForEnrolledUser(userId) {
   const { courses, enrollments } = Database;
   const enrolledCourses = courses.filter((course) =>
@@ -38,4 +16,11 @@ export function findCoursesForEnrolledUser(userId) {
     )
   );
   return enrolledCourses;
+}
+export function createCourse(course) {
+  delete course._id;
+  return CourseModel.create(course);
+}
+export function updateCourse(courseId, courseUpdates) {
+  return CourseModel.updateOne({ _id: courseId }, { $set: courseUpdates });
 }

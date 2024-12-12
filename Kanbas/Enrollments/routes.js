@@ -7,13 +7,6 @@ function EnrollmentRoutes(app) {
     res.json(enrollments);
   });
 
-  // Get enrollments by user
-  app.get("/api/users/:userId/enrollments", (req, res) => {
-    const { userId } = req.params;
-    const enrollments = dao.findEnrollmentsByUser(userId);
-    res.json(enrollments);
-  });
-
   // Get enrollments by course
   app.get("/api/courses/:courseId/enrollments", (req, res) => {
     const { courseId } = req.params;
